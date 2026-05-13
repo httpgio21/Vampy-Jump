@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 69f7dbb1683bae241a0cc0aa0fa0272c
+guid: 13d9e414a89f15f4784ab39d8cc1d02b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3014589263868183304
-    second: Vamp_sprite(2)_0
+      213: 6690229579586502040
+    second: Vamp_sprite_leg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Vamp_sprite(2)_0
+      name: Vamp_sprite_leg_0
       rect:
         serializedVersion: 2
-        x: 143
-        y: 88
-        width: 704
-        height: 881
+        x: 110
+        y: 57
+        width: 764
+        height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 803c198a6f8f5d920800000000000000
-      internalID: 3014589263868183304
+      spriteID: 89d70153b5878dc50800000000000000
+      internalID: 6690229579586502040
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Vamp_sprite(2)_0: 3014589263868183304
+      Vamp_sprite_leg_0: 6690229579586502040
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

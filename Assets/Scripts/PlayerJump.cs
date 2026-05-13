@@ -4,18 +4,17 @@ public class PlayerJump : MonoBehaviour
 {
     public float jumpForce = 7f;
 
-    public Sprite idleSprite;
-    public Sprite jumpSprite;
-
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
 
     private bool isGrounded;
+
+    private PlayerWalking anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+
+        anim = GetComponent<PlayerWalking>();
     }
 
     void Update()
@@ -24,7 +23,7 @@ public class PlayerJump : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
 
-            sr.sprite = jumpSprite;
+            anim.isJumping = true;
         }
     }
 
@@ -32,7 +31,7 @@ public class PlayerJump : MonoBehaviour
     {
         isGrounded = true;
 
-        sr.sprite = idleSprite;
+        anim.isJumping = false;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
