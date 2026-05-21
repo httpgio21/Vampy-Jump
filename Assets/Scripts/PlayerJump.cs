@@ -26,7 +26,13 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumps)
+        // PC (teclado) + Mobile (toque)
+        bool jumpInput =
+            Input.GetKeyDown(KeyCode.Space) ||
+            Input.GetMouseButtonDown(0) ||   // clique no PC
+            Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began; // toque no mobile
+
+        if (jumpInput && jumpCount < maxJumps)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
