@@ -4,12 +4,12 @@ using System.Collections;
 public class PlayerJump : MonoBehaviour
 {
     public float jumpForce = 25f;
-
     private Rigidbody2D rb;
     private bool isGrounded;
     private PlayerWalking anim;
     private SpriteRenderer sr;
     private PlayerHealth playerHealth;
+    public bool canJump = true;
 
     private int jumpCount = 0;
     public int maxJumps = 2;
@@ -32,7 +32,7 @@ public class PlayerJump : MonoBehaviour
             Input.GetMouseButtonDown(0) ||   // clique no PC
             Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began; // toque no mobile
 
-        if (jumpInput && jumpCount < maxJumps)
+        if (canJump && jumpInput && jumpCount < maxJumps)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);

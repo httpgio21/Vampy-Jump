@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 75046221}
   - component: {fileID: 75046228}
   - component: {fileID: 75046229}
+  - component: {fileID: 75046230}
   m_Layer: 0
   m_Name: Vamp_sprite(3)_new
   m_TagString: Player
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
   jumpForce: 7
+  canJump: 1
   maxJumps: 2
 --- !u!61 &75046223
 BoxCollider2D:
@@ -260,7 +262,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75046220}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -416,7 +418,7 @@ Transform:
   m_GameObject: {fileID: 75046220}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 949.89, y: 409.5, z: 0}
+  m_LocalPosition: {x: 951.03, y: 409.49, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -456,6 +458,199 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAutoWalk
   walkSpeed: 3
   autoWalk: 0
+--- !u!60 &75046230
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75046220}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6.13, y: 8.8}
+    newSize: {x: 6.17, y: 8.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.905, y: -2.9199998}
+      - {x: -0.765, y: -2.8799999}
+      - {x: -0.745, y: -2.78}
+      - {x: -0.575, y: -2.77}
+      - {x: -0.345, y: -2.72}
+      - {x: -0.185, y: -2.6599998}
+      - {x: 0.235, y: -2.6399999}
+      - {x: 0.345, y: -2.53}
+      - {x: 0.445, y: -2.3999999}
+      - {x: 0.53499997, y: -2.23}
+      - {x: 0.60499996, y: -2.07}
+      - {x: 0.675, y: -1.9499999}
+      - {x: 0.885, y: -2.05}
+      - {x: 0.97499996, y: -2.1699998}
+      - {x: 1.145, y: -2.31}
+      - {x: 1.305, y: -2.32}
+      - {x: 1.3249999, y: -2.49}
+      - {x: 1.535, y: -2.59}
+      - {x: 1.5749999, y: -2.69}
+      - {x: 1.755, y: -2.78}
+      - {x: 2.0449998, y: -2.77}
+      - {x: 2.165, y: -2.71}
+      - {x: 2.455, y: -2.3799999}
+      - {x: 2.575, y: -2.25}
+      - {x: 2.715, y: -2.1499999}
+      - {x: 2.8049998, y: -2}
+      - {x: 2.8049998, y: -1.9699999}
+      - {x: 2.835, y: -1.66}
+      - {x: 2.695, y: -1.53}
+      - {x: 2.2549999, y: -1.51}
+      - {x: 2.235, y: -1.63}
+      - {x: 1.935, y: -1.5}
+      - {x: 1.905, y: -1.4499999}
+      - {x: 1.785, y: -1.31}
+      - {x: 1.885, y: -1.3299999}
+      - {x: 2.355, y: -1.3299999}
+      - {x: 2.385, y: -1.3199999}
+      - {x: 2.5349998, y: -1.23}
+      - {x: 2.595, y: -1.11}
+      - {x: 2.7849998, y: -1.11}
+      - {x: 2.8149998, y: -0.97999996}
+      - {x: 2.925, y: -0.98999995}
+      - {x: 2.965, y: -0.87}
+      - {x: 3.0649998, y: -0.84}
+      - {x: 3.0649998, y: -0.29}
+      - {x: 2.995, y: -0.26}
+      - {x: 2.955, y: -0.12}
+      - {x: 2.825, y: -0.03}
+      - {x: 2.445, y: -0.03}
+      - {x: 2.415, y: -0.06}
+      - {x: 2.305, y: -0.12}
+      - {x: 2.2749999, y: -0.22999999}
+      - {x: 2.145, y: -0.08}
+      - {x: 2.2849998, y: 0.089999996}
+      - {x: 2.2749999, y: 0.61}
+      - {x: 2.2649999, y: 0.65}
+      - {x: 2.415, y: 0.69}
+      - {x: 2.5049999, y: 0.78}
+      - {x: 2.5449998, y: 0.9}
+      - {x: 2.665, y: 0.95}
+      - {x: 2.7749999, y: 1.13}
+      - {x: 2.7849998, y: 1.4499999}
+      - {x: 2.645, y: 1.48}
+      - {x: 2.705, y: 1.91}
+      - {x: 2.875, y: 2.48}
+      - {x: 2.925, y: 2.95}
+      - {x: 2.7949998, y: 2.99}
+      - {x: 2.8049998, y: 3.3799999}
+      - {x: 2.665, y: 3.51}
+      - {x: 2.665, y: 3.6599998}
+      - {x: 2.5549998, y: 3.6899998}
+      - {x: 2.565, y: 3.82}
+      - {x: 2.405, y: 4.0099998}
+      - {x: 2.305, y: 4.1}
+      - {x: 1.9749999, y: 4.2799997}
+      - {x: 1.505, y: 4.37}
+      - {x: 0.53499997, y: 4.37}
+      - {x: 0.515, y: 4.35}
+      - {x: 0.515, y: 4.25}
+      - {x: 0.175, y: 4.25}
+      - {x: 0.155, y: 4.23}
+      - {x: 0.155, y: 4.12}
+      - {x: -0.015, y: 4.12}
+      - {x: -0.155, y: 3.9299998}
+      - {x: -0.255, y: 3.84}
+      - {x: -0.285, y: 3.78}
+      - {x: -0.415, y: 3.6499999}
+      - {x: -0.415, y: 3.6}
+      - {x: -0.49499997, y: 3.52}
+      - {x: -0.525, y: 3.46}
+      - {x: -0.555, y: 3.1999998}
+      - {x: -0.575, y: 2.6499999}
+      - {x: -0.625, y: 2.76}
+      - {x: -0.79499996, y: 2.9299998}
+      - {x: -0.995, y: 3.05}
+      - {x: -1.3349999, y: 3.05}
+      - {x: -1.355, y: 3.03}
+      - {x: -1.365, y: 2.3}
+      - {x: -1.3149999, y: 2.1299999}
+      - {x: -1.2049999, y: 1.9599999}
+      - {x: -1.605, y: 1.8499999}
+      - {x: -1.635, y: 1.5}
+      - {x: -1.545, y: 1.4599999}
+      - {x: -1.505, y: 1.35}
+      - {x: -1.225, y: 1.11}
+      - {x: -1.0749999, y: 1.04}
+      - {x: -0.935, y: 0.9}
+      - {x: -1.035, y: 0.84}
+      - {x: -1.0749999, y: 0.7}
+      - {x: -1.185, y: 0.71}
+      - {x: -1.225, y: 0.58}
+      - {x: -1.3149999, y: 0.57}
+      - {x: -1.4649999, y: 0.42}
+      - {x: -1.495, y: 0.31}
+      - {x: -1.5949999, y: 0.26999998}
+      - {x: -2.165, y: -0.37}
+      - {x: -2.145, y: -0.51}
+      - {x: -2.2549999, y: -0.48}
+      - {x: -2.415, y: -0.68}
+      - {x: -2.5549998, y: -0.83}
+      - {x: -2.5549998, y: -0.96}
+      - {x: -2.705, y: -0.95}
+      - {x: -2.995, y: -1.3199999}
+      - {x: -3.0449998, y: -1.4599999}
+      - {x: -3.0449998, y: -1.89}
+      - {x: -2.855, y: -1.9599999}
+      - {x: -2.475, y: -1.9799999}
+      - {x: -2.305, y: -1.91}
+      - {x: -2.115, y: -1.9599999}
+      - {x: -2.115, y: -2.09}
+      - {x: -2.0049999, y: -2.1299999}
+      - {x: -1.665, y: -2.1299999}
+      - {x: -1.625, y: -2.05}
+      - {x: -1.615, y: -2.1}
+      - {x: -1.685, y: -2.22}
+      - {x: -1.8349999, y: -2.25}
+      - {x: -1.865, y: -2.4299998}
+      - {x: -1.9449999, y: -2.49}
+      - {x: -2.0249999, y: -2.81}
+      - {x: -2.0449998, y: -3.3}
+      - {x: -1.915, y: -3.33}
+      - {x: -1.885, y: -3.46}
+      - {x: -1.475, y: -3.46}
+      - {x: -1.225, y: -3.21}
+      - {x: -1.095, y: -3.04}
+      - {x: -1.005, y: -3.05}
+  m_UseDelaunayMesh: 1
 --- !u!1 &142284357
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +1047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 485969626}
   - component: {fileID: 485969627}
+  - component: {fileID: 485969628}
   m_Layer: 5
   m_Name: vampy_hearts
   m_TagString: Untagged
@@ -907,6 +1103,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &485969628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485969625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2706001b84c59fb45961b6fec4b71edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DontDestroyUI
 --- !u!1 &496081708
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +1147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NextLevelTrigger
   fadePanel: {fileID: 142284358}
   fadeDuration: 1
-  nextSceneName: 
+  nextSceneName: Cave-Bat
 --- !u!61 &496081710
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1692,7 +1900,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 75046228}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
         m_MethodName: ClicouNoBotaoReiniciar
         m_Mode: 1
