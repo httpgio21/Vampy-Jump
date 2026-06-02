@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-    public GameObject obstaclePrefab;
+    public GameObject[] obstaclePrefabs;
+
+    // mesma ordem dos prefabs
+    public float[] yOffsets;
 
     public float minTime = 1f;
     public float maxTime = 2f;
@@ -14,32 +17,41 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Start()
     {
-        // SPAWN IMEDIATO
-        SpawnObstacle();
-
         SetRandomTime();
     }
 
     void Update()
     {
-        if(stopSpawn)
+        if (stopSpawn)
             return;
 
         timer += Time.deltaTime;
 
-        if(timer >= nextSpawnTime)
+        if (timer >= nextSpawnTime)
         {
             SpawnObstacle();
 
             timer = 0;
-
             SetRandomTime();
         }
     }
 
     void SpawnObstacle()
     {
-        Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
+        int randomIndex = Random.Range(0, obstaclePrefabs.Length);
+
+        Vector3 spawnPos = transform.position;
+
+        if (randomIndex < yOffsets.Length)
+        {
+            spawnPos.y += yOffsets[randomIndex];
+        }
+
+        Instantiate(
+            obstaclePrefabs[randomIndex],
+            spawnPos,
+            Quaternion.identity
+        );
     }
 
     void SetRandomTime()

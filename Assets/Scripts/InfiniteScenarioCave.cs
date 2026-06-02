@@ -1,4 +1,6 @@
 using UnityEngine;
+// 1. IMPORTANTE: Adicione a biblioteca de gerenciamento de cenas
+using UnityEngine.SceneManagement; 
 
 public class InfiniteScenarioCave : MonoBehaviour
 {
@@ -25,16 +27,21 @@ public class InfiniteScenarioCave : MonoBehaviour
 
     [Header("UI - Fade Final")]
     [Tooltip("Arraste o Canvas Group do seu FadePanel aqui")]
-    public CanvasGroup fadeCanvasGroup; // Corrigido aqui!
+    public CanvasGroup fadeCanvasGroup; 
     [Tooltip("Velocidade com que a tela escurece")]
     public float fadeSpeed = 1f;
 
+    // 2. ADICIONE: Nome da terceira cena exatamente como está na Unity
+    [Header("Transição de Cena")]
+    [Tooltip("Nome exato da terceira cena (Digite: Second-Floor-Cave)")]
+    public string nomeDaProximaCena;
+
     private bool phaseEnded = false;
     private float initialY; 
+    private bool sceneLoadingStarted = false; // Evita carregar a cena múltiplas vezes
 
     void Start()
     {
-        // Garante que o painel comece invisível e sem bloquear cliques no início
         if (fadeCanvasGroup != null)
         {
             fadeCanvasGroup.alpha = 0f;
@@ -47,26 +54,20 @@ public class InfiniteScenarioCave : MonoBehaviour
         // GAMEPLAY NORMAL
         if (!phaseEnded)
         {
-            // MOVE O CENÁRIO
             transform.position += Vector3.left * speed * Time.deltaTime;
 
-            // verifica se o último cenário chegou no limite
             if (ultimoCenario.position.x <= stopX)
             {
                 phaseEnded = true;
 
-                // desativa controle do jogador
                 batController.enabled = false;
 
-                // remove gravidade e zera velocidades físicas
                 playerRb.gravityScale = 0f;
                 playerRb.linearVelocity = Vector2.zero;
                 playerRb.angularVelocity = 0f; 
 
-                // Salva a altura em que o morcego parou para iniciar a flutuação
                 initialY = playerRb.transform.position.y;
 
-                // Ativa o bloqueio de cliques do painel
                 if (fadeCanvasGroup != null)
                 {
                     fadeCanvasGroup.blocksRaycasts = true;
@@ -74,26 +75,30 @@ public class InfiniteScenarioCave : MonoBehaviour
             }
         }
         
-        // Se a fase acabou, faz o Fade acontecer continuamente no Update
+        // Se a fase acabou, faz o Fade acontecer continuamente
         if (phaseEnded && fadeCanvasGroup != null)
         {
-            // Aumenta o Alpha de 0 até 1 suavemente
             fadeCanvasGroup.alpha = Mathf.MoveTowards(fadeCanvasGroup.alpha, 1f, fadeSpeed * Time.deltaTime);
+
+            // 3. NOVO: Se a tela ficou totalmente escura, muda para a terceira cena
+            if (fadeCanvasGroup.alpha >= 1f && !sceneLoadingStarted)
+            {
+                sceneLoadingStarted = true;
+                CarregarProximaCena();
+            }
         }
     }
 
     void FixedUpdate()
     {
-        // FINAL DA FASE (Movimento do Morcego)
         if (phaseEnded)
         {
-            // 1. Calcula a nova altura (Y) de flutuação suave
+            // Calcula a flutuação do morcego no final da fase
             float newY = initialY + Mathf.Sin(Time.time * amplitudeVelocidade) * amplitudeAltura;
-
-            // 2. Alvo combina o X do ponto central e o Y da flutuação
+            
+            // LINHA CORRIGIDA: Criando o vetor de posição corretamente
             Vector2 targetPos = new Vector2(centerPoint.position.x, newY);
 
-            // 3. Move o Rigidbody do morcego suavemente usando física
             Vector2 nextPosition = Vector2.MoveTowards(
                 playerRb.position,
                 targetPos,
@@ -101,6 +106,26 @@ public class InfiniteScenarioCave : MonoBehaviour
             );
 
             playerRb.MovePosition(nextPosition);
+        }
+    }
+
+    // 4. METODO ATUALIZADO: Evita que o morcego invada a Cena 3 e quebre o Vampiro nativo
+    void CarregarProximaCena()
+    {
+        if (!string.IsNullOrEmpty(nomeDaProximaCena))
+        {
+            // DESTRÓI O CORPO DO MORCEGO ANTES DA MUDANÇA:
+            // Isso impede que o DontDestroyOnLoad da vida traga o corpo do morcego junto para a Cena 3
+            if (playerRb != null)
+            {
+                Destroy(playerRb.gameObject);
+            }
+
+            SceneManager.LoadScene(nomeDaProximaCena);
+        }
+        else
+        {
+            Debug.LogError("Esqueceu de colocar o nome da terceira cena no Inspector!");
         }
     }
 }

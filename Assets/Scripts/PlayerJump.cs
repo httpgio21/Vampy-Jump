@@ -8,7 +8,6 @@ public class PlayerJump : MonoBehaviour
     private bool isGrounded;
     private PlayerWalking anim;
     private SpriteRenderer sr;
-    private PlayerHealth playerHealth;
     public bool canJump = true;
 
     private int jumpCount = 0;
@@ -19,7 +18,9 @@ public class PlayerJump : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<PlayerWalking>();
         sr = GetComponent<SpriteRenderer>();
-        playerHealth = GetComponent<PlayerHealth>();
+
+        // CONFIGURAÇÃO NOVA: Não usamos mais o GetComponent aqui, 
+        // já que o PlayerHealth agora roda de forma global e independente!
 
         rb.gravityScale = 1.5f;
     }
@@ -60,15 +61,17 @@ public class PlayerJump : MonoBehaviour
             // Se bateu de LADO (Dano!)
             if (Mathf.Abs(contact.normal.x) > 0.5f)
             {
-                // Pega o colisor específico DESTA Lápide que acabou de bater
                 Collider2D colisorObstaculo = collision.collider;
-
-                // Começa o efeito de piscar e passa a Lápide que bateu para ela virar fantasma
                 StartCoroutine(DamageEffect(colisorObstaculo));
 
-                if (playerHealth != null)
+                // AJUSTE AQUI: Chama o PlayerHealth através do Singleton global (Instance)
+                if (PlayerHealth.Instance != null)
                 {
-                    playerHealth.TomarDano();
+                    PlayerHealth.Instance.TomarDano();
+                }
+                else
+                {
+                    Debug.LogWarning("PlayerHealth.Instance não foi encontrado na cena!");
                 }
             }
             // Se o Vampirinho pisou POR CIMA da Lápide
@@ -81,16 +84,13 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
-    // O efeito de dano agora recebe o colisor da Lápide atingida
     IEnumerator DamageEffect(Collider2D obstaculo)
     {
-        // Se a Lápide ainda existir, transforma APENAS ELA em fantasma (Trigger)
         if (obstaculo != null)
         {
             obstaculo.isTrigger = true;
         }
 
-        // Vampirinho pisca por um tempo
         for (int i = 0; i < 6; i++)
         {
             sr.enabled = false;
@@ -100,7 +100,6 @@ public class PlayerJump : MonoBehaviour
             yield return new WaitForSeconds(0.08f);
         }
 
-        // Depois que ele terminou de piscar, se a Lápide ainda estiver na tela, ela volta a ser sólida
         if (obstaculo != null)
         {
             obstaculo.isTrigger = false;

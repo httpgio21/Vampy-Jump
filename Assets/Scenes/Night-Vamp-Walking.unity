@@ -210,7 +210,6 @@ GameObject:
   - component: {fileID: 75046223}
   - component: {fileID: 75046222}
   - component: {fileID: 75046221}
-  - component: {fileID: 75046228}
   - component: {fileID: 75046229}
   - component: {fileID: 75046230}
   m_Layer: 0
@@ -424,26 +423,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &75046228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75046220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ee41f2b1c8b5341bd5cd276c96f779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  vidas: 3
-  caixasDeCoracao:
-  - {fileID: 1472338613}
-  - {fileID: 1777181913}
-  - {fileID: 820252056}
-  coracaoCheio: {fileID: -8936550617112854372, guid: 1b5af77882c00644490ac7dcabad3f02, type: 3}
-  coracaoVazio: {fileID: -4419438057973506073, guid: c3ba0c6d290cc6a468a7d6f8c4b4538e, type: 3}
-  telaGameOver: {fileID: 67964406}
 --- !u!114 &75046229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1979,9 +1958,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5c48bd8095abd43afafc79d36b31f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawner
-  obstaclePrefab: {fileID: 530332734200466816, guid: f54b530aac7b08247bedb4464573574a, type: 3}
-  minTime: 1.2
-  maxTime: 1.7
+  obstaclePrefabs:
+  - {fileID: 530332734200466816, guid: f54b530aac7b08247bedb4464573574a, type: 3}
+  yOffsets:
+  - 0
+  minTime: 1
+  maxTime: 2
   stopSpawn: 0
 --- !u!4 &1468093465
 Transform:
@@ -2386,6 +2368,58 @@ MonoBehaviour:
   resetX: 20
   infiniteLoop: 0
   stopMoving: 0
+--- !u!1 &1772683763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1772683765}
+  - component: {fileID: 1772683764}
+  m_Layer: 0
+  m_Name: GerenciadordeVida
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1772683764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772683763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ee41f2b1c8b5341bd5cd276c96f779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  vidas: 3
+  caixasDeCoracao:
+  - {fileID: 1472338613}
+  - {fileID: 1777181913}
+  - {fileID: 820252056}
+  coracaoCheio: {fileID: -8936550617112854372, guid: 1b5af77882c00644490ac7dcabad3f02, type: 3}
+  coracaoVazio: {fileID: -4419438057973506073, guid: c3ba0c6d290cc6a468a7d6f8c4b4538e, type: 3}
+  telaGameOver: {fileID: 67964406}
+--- !u!4 &1772683765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772683763}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1044.0278, y: 409.5006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1777181911
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,3 +2635,4 @@ SceneRoots:
   - {fileID: 155642606}
   - {fileID: 798710976}
   - {fileID: 1468093465}
+  - {fileID: 1772683765}
