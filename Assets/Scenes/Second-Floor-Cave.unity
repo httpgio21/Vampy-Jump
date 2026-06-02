@@ -335,6 +335,7 @@ MonoBehaviour:
   velocidade: 4
   larguraSprite: 20.6
   tempoDeCena: 20
+  antecedenciaPararSpawn: 5
   fadeCanvasGroup: {fileID: 0}
   fadeSpeed: 1
   nomeDaCena: 
@@ -805,6 +806,7 @@ MonoBehaviour:
   velocidade: 4
   larguraSprite: 20.6
   tempoDeCena: 20
+  antecedenciaPararSpawn: 5
   fadeCanvasGroup: {fileID: 0}
   fadeSpeed: 1
   nomeDaCena: 
@@ -927,9 +929,13 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 257659376978994473, guid: 41f9f46eb6e1e04419bb364b9755cde4, type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1194252371155480496, guid: 41f9f46eb6e1e04419bb364b9755cde4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.33
+      value: 2.63
       objectReference: {fileID: 0}
     - target: {fileID: 1194252371155480496, guid: 41f9f46eb6e1e04419bb364b9755cde4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1514,6 +1520,7 @@ MonoBehaviour:
   velocidade: 2
   larguraSprite: 20
   tempoDeCena: 20
+  antecedenciaPararSpawn: 6
   fadeCanvasGroup: {fileID: 2040457233}
   fadeSpeed: 1
   nomeDaCena: Cave-Bat
@@ -2020,6 +2027,10 @@ PrefabInstance:
     - target: {fileID: 4769401041940877274, guid: f2f6665e4b257634ca52a650e239585e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313984276314995920, guid: f2f6665e4b257634ca52a650e239585e, type: 3}
+      propertyPath: speed
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4930041762162203364, guid: f2f6665e4b257634ca52a650e239585e, type: 3}

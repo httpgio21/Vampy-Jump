@@ -10,6 +10,9 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
     [Header("Duração da Cena")]
     public float tempoDeCena = 20f;
 
+    [Tooltip("Quantos segundos ANTES do fim da cena o spawner deve parar? (Ex: 5)")]
+    public float antecedenciaPararSpawn = 5f;
+
     [Header("Fade")]
     public CanvasGroup fadeCanvasGroup;
     public float fadeSpeed = 1f;
@@ -25,6 +28,7 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
 
     private float timer;
     private bool iniciandoFade = false;
+    private bool spawnerJaParou = false;
 
     void Start()
     {
@@ -39,6 +43,19 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
 
     void Update()
     {
+        // Contador da cena
+        timer += Time.deltaTime;
+
+        // 1. Para a criação de obstáculos antes do tempo final da cena
+        if (timer >= (tempoDeCena - antecedenciaPararSpawn) && !spawnerJaParou)
+        {
+            spawnerJaParou = true;
+            if (obstacleSpawner != null)
+            {
+                obstacleSpawner.stopSpawn = true;
+            }
+        }
+
         // Movimento infinito do fundo
         if (!iniciandoFade)
         {
@@ -50,21 +67,13 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
             }
         }
 
-        // Contador da cena
-        timer += Time.deltaTime;
-
+        // Fim do tempo da cena
         if (timer >= tempoDeCena && !iniciandoFade)
         {
             iniciandoFade = true;
 
             // Para o fundo
             velocidade = 0f;
-
-            // Para o spawner
-            if (obstacleSpawner != null)
-            {
-                obstacleSpawner.stopSpawn = true;
-            }
 
             // Faz o Vampiro andar sozinho
             if (playerAutoWalk != null)
@@ -73,13 +82,8 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
                 playerAutoWalk.autoWalk = true;
             }
 
-            // Remove todas as gosmas da tela
-            MoveGosma[] obstacles = FindObjectsOfType<MoveGosma>();
-
-            foreach (MoveGosma obstacle in obstacles)
-            {
-                Destroy(obstacle.gameObject);
-            }
+            // REMOVIDO: Não deleta mais os obstáculos na tela de forma abrupta,
+            // eles já saíram da tela sozinhos por causa do tempo de antecedência.
         }
 
         // Fade
