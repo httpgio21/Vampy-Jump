@@ -314,8 +314,8 @@ Transform:
   m_GameObject: {fileID: 401908463}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.89977, y: -0.51043, z: 0}
-  m_LocalScale: {x: 1.343354, y: 1, z: 1}
+  m_LocalPosition: {x: -6.4074, y: -0.51043, z: 0}
+  m_LocalScale: {x: 1.6699725, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 366178758}
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InfiniteBackgroundCave2
   velocidade: 4
-  larguraSprite: 20.6
+  larguraSprite: 20.5
   tempoDeCena: 20
   antecedenciaPararSpawn: 5
   fadeCanvasGroup: {fileID: 0}
@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InfiniteBackgroundCave2
   velocidade: 4
-  larguraSprite: 20.6
+  larguraSprite: 20.5
   tempoDeCena: 20
   antecedenciaPararSpawn: 5
   fadeCanvasGroup: {fileID: 0}
@@ -1394,7 +1394,7 @@ Transform:
   m_GameObject: {fileID: 1526869294}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.11, y: -3.1, z: 0}
+  m_LocalPosition: {x: -7.44, y: -3.1, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1518,7 +1518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InfiniteBackgroundCave2
   velocidade: 2
-  larguraSprite: 20
+  larguraSprite: 0
   tempoDeCena: 20
   antecedenciaPararSpawn: 6
   fadeCanvasGroup: {fileID: 2040457233}
