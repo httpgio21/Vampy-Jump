@@ -290,8 +290,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -44.880096, y: -105.67695}
-  m_SizeDelta: {x: 720.8738, y: 759.2547}
+  m_AnchoredPosition: {x: -4.013, y: -22.6494}
+  m_SizeDelta: {x: 191.5882, y: 184.1448}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &90042816
 MonoBehaviour:
@@ -481,6 +481,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610563368}
   m_CullTransparentMesh: 1
+--- !u!1 &801214056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 801214058}
+  - component: {fileID: 801214057}
+  m_Layer: 0
+  m_Name: Menuinput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &801214057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801214056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73b0659f6a8d8c49acc31abd144c48b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuInput
+  primeiroBotao: {fileID: 1806256899}
+--- !u!4 &801214058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801214056}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 327.48688, y: 56.14374, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1225114227
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +908,7 @@ GameObject:
   - component: {fileID: 1806256901}
   - component: {fileID: 1806256904}
   m_Layer: 0
-  m_Name: Button
+  m_Name: BtnVoltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -886,8 +931,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -984, y: -482}
-  m_SizeDelta: {x: 433.5617, y: 189.2735}
+  m_AnchoredPosition: {x: -246, y: -120}
+  m_SizeDelta: {x: 183.8427, y: 59.7132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1806256901
 MonoBehaviour:
@@ -913,7 +958,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.8490566, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.3301887, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.8396226, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.5
@@ -1197,3 +1242,4 @@ SceneRoots:
   - {fileID: 1225114228}
   - {fileID: 1894397015}
   - {fileID: 2044613808}
+  - {fileID: 801214058}

@@ -31,6 +31,7 @@ public class PlayerJump : MonoBehaviour
         bool jumpInput =
             Input.GetKeyDown(KeyCode.Space) ||
             Input.GetMouseButtonDown(0) ||   // clique no PC
+            Input.GetKeyDown(KeyCode.JoystickButton0) || // toque no botão A no controle de Xbox
             Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began; // toque no mobile
 
         if (canJump && jumpInput && jumpCount < maxJumps)
