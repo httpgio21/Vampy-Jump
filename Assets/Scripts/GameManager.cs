@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+
+        //ScoreManager.Instance.LimparRanking();
+
         // PARA OS SPAWNS ANTES
         Invoke(nameof(StopSpawners), tempoParaFinal - tempoPararSpawns);
 

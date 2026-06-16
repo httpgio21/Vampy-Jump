@@ -46,7 +46,7 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
         // Contador da cena
         timer += Time.deltaTime;
 
-        // 1. Para a criação de obstáculos antes do tempo final da cena
+        // 1. Para a criação de novos obstáculos antes do fim
         if (timer >= (tempoDeCena - antecedenciaPararSpawn) && !spawnerJaParou)
         {
             spawnerJaParou = true;
@@ -71,8 +71,6 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
         if (timer >= tempoDeCena && !iniciandoFade)
         {
             iniciandoFade = true;
-
-            // Para o fundo
             velocidade = 0f;
 
             // Faz o Vampiro andar sozinho
@@ -82,8 +80,13 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
                 playerAutoWalk.autoWalk = true;
             }
 
-            // REMOVIDO: Não deleta mais os obstáculos na tela de forma abrupta,
-            // eles já saíram da tela sozinhos por causa do tempo de antecedência.
+            // NOVA LÓGICA: Desativa instantaneamente todos os obstáculos na tela
+            // Isso impede que eles continuem andando enquanto o fade acontece
+            GameObject[] objetosNaTela = GameObject.FindGameObjectsWithTag("Obstacle");
+            foreach (GameObject obj in objetosNaTela)
+            {
+                obj.SetActive(false);
+            }
         }
 
         // Fade
