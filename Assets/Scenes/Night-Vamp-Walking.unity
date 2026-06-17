@@ -3225,7 +3225,7 @@ MonoBehaviour:
   yOffsets:
   - 0
   minTime: 1
-  maxTime: 2
+  maxTime: 3
   stopSpawn: 0
 --- !u!4 &1468093465
 Transform:

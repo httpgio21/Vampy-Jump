@@ -29,10 +29,27 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
     private float timer;
     private bool iniciandoFade = false;
     private bool spawnerJaParou = false;
+    private bool sceneLoadingStarted = false; // guard para LoadScene ser chamado 1x só
+
+    // walkSpeed original do Inspector — capturado em Awake antes de Start()s concorrentes
+    private float walkSpeedPadrao;
+
+    void Awake()
+    {
+        // Awake roda antes de qualquer Start(), então captura o valor limpo do Inspector
+        // antes que PlayerAutoWalk.Start() force walkSpeed = 2f.
+        walkSpeedPadrao = (playerAutoWalk != null) ? playerAutoWalk.walkSpeed : 2f;
+    }
 
     void Start()
     {
+        // Reseta todos os estados a cada vez que a cena é carregada.
+        // Crítico para o loop: na segunda volta os bools continuariam true
+        // se não fossem resetados aqui, travando a cena imediatamente.
         timer = 0f;
+        iniciandoFade = false;
+        spawnerJaParou = false;
+        sceneLoadingStarted = false;
 
         if (fadeCanvasGroup != null)
         {
@@ -46,14 +63,12 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
         // Contador da cena
         timer += Time.deltaTime;
 
-        // 1. Para a criação de novos obstáculos antes do fim
+        // Para a criação de novos obstáculos antes do fim
         if (timer >= (tempoDeCena - antecedenciaPararSpawn) && !spawnerJaParou)
         {
             spawnerJaParou = true;
             if (obstacleSpawner != null)
-            {
                 obstacleSpawner.stopSpawn = true;
-            }
         }
 
         // Movimento infinito do fundo
@@ -62,9 +77,7 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
             transform.Translate(Vector3.left * velocidade * Time.deltaTime);
 
             if (transform.position.x <= -larguraSprite)
-            {
                 transform.position += new Vector3(larguraSprite * 2f, 0, 0);
-            }
         }
 
         // Fim do tempo da cena
@@ -73,40 +86,41 @@ public class InfiniteBackgroundCave2 : MonoBehaviour
             iniciandoFade = true;
             velocidade = 0f;
 
-            // Faz o Vampiro andar sozinho
             if (playerAutoWalk != null)
             {
                 playerAutoWalk.walkSpeed = 3f;
                 playerAutoWalk.autoWalk = true;
             }
 
-            // NOVA LÓGICA: Desativa instantaneamente todos os obstáculos na tela
-            // Isso impede que eles continuem andando enquanto o fade acontece
-            GameObject[] objetosNaTela = GameObject.FindGameObjectsWithTag("Obstacle");
-            foreach (GameObject obj in objetosNaTela)
-            {
+            // Desativa obstáculos que ainda estão na tela
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Obstacle"))
                 obj.SetActive(false);
-            }
         }
 
-        // Fade
+        // Fade de saída
         if (iniciandoFade && fadeCanvasGroup != null)
         {
             fadeCanvasGroup.blocksRaycasts = true;
 
             fadeCanvasGroup.alpha = Mathf.MoveTowards(
-                fadeCanvasGroup.alpha,
-                1f,
-                fadeSpeed * Time.deltaTime
-            );
+                fadeCanvasGroup.alpha, 1f, fadeSpeed * Time.deltaTime);
 
-            // Quando a tela estiver totalmente escura
-            if (fadeCanvasGroup.alpha >= 0.99f)
+            if (fadeCanvasGroup.alpha >= 0.99f && !sceneLoadingStarted)
             {
-                PlayerJump vampiro = FindFirstObjectByType<PlayerJump>();
+                sceneLoadingStarted = true;
 
+                // Limpa o Vampiro antes de trocar de cena para não
+                // carregar estado sujo para a CaveBat
+                PlayerJump vampiro = FindFirstObjectByType<PlayerJump>();
                 if (vampiro != null)
                 {
+                    PlayerAutoWalk autoWalkComp = vampiro.GetComponent<PlayerAutoWalk>();
+                    if (autoWalkComp != null)
+                    {
+                        autoWalkComp.autoWalk = false;
+                        autoWalkComp.walkSpeed = walkSpeedPadrao;
+                    }
+
                     Destroy(vampiro.gameObject);
                 }
 
