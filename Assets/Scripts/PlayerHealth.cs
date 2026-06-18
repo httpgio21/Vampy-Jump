@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -10,11 +11,15 @@ public class PlayerHealth : MonoBehaviour
     [Header("Configurações de Atributos")]
     public int vidas = 3;
 
-    [Header("Configurações de UI (Interface)")]
-    public Image[] caixasDeCoracao;
+    [Header("Configurações de UI (Interface) - Corações")]
+    public Image[] caixasCoracaoEsquerdo;
+    public Image[] caixasCoracaoDireito;
     public Sprite coracaoCheio;
     public Sprite coracaoVazio;
-    public GameObject telaGameOver;
+
+    [Header("Configurações de UI (Interface) - Game Over")]
+    public GameObject telaGameOverEsquerda;
+    public GameObject telaGameOverDireita;
 
     [Header("Cenas")]
     public string nomeCenaInicio  = "Night-Vamp-Walking";
@@ -22,13 +27,17 @@ public class PlayerHealth : MonoBehaviour
 
     private bool isGameOver = false;
 
-    // Estado original do ScoreText para restaurar ao reiniciar
-    private RectTransform scoreTextRect;
-    private Transform     scoreTextPaiOriginal;
-    private Vector2       scoreTextAnchoredPosOriginal;
-    private Vector2       scoreTextAnchorMinOriginal;
-    private Vector2       scoreTextAnchorMaxOriginal;
-    private Vector2       scoreTextPivotOriginal;
+    // Estrutura para salvar o estado original de múltiplos ScoreTexts (VR Left/Right)
+    private class ScoreTextData
+    {
+        public RectTransform rect;
+        public Transform paiOriginal;
+        public Vector2 anchoredPosOriginal;
+        public Vector2 anchorMinOriginal;
+        public Vector2 anchorMaxOriginal;
+        public Vector2 pivotOriginal;
+    }
+    private List<ScoreTextData> listaScoresModificados = new List<ScoreTextData>();
 
     // ── Singleton ─────────────────────────────────────────────────
     void Awake()
@@ -55,121 +64,148 @@ public class PlayerHealth : MonoBehaviour
     {
         Time.timeScale = 1f;
         isGameOver = false;
-        scoreTextRect = null;
+        listaScoresModificados.Clear();
 
         ReconectarComponentesDeUI();
 
-        if (telaGameOver != null)
-            telaGameOver.SetActive(false);
+        if (telaGameOverEsquerda != null) telaGameOverEsquerda.SetActive(false);
+        if (telaGameOverDireita != null) telaGameOverDireita.SetActive(false);
 
         AtualizarCoracoesNaTela();
     }
 
-    // ── Reconexão de UI ───────────────────────────────────────────
+    // ── Reconexão de UI Multi-Canvas (VR) ───────────────────────────
     void ReconectarComponentesDeUI()
     {
-        Canvas canvasDaCena = Object.FindFirstObjectByType<Canvas>();
-        if (canvasDaCena == null)
+        // Busca todos os Canvas ativos e inativos da cena dividida
+        Canvas[] todosOsCanvas = Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None);
+        if (todosOsCanvas.Length == 0)
         {
             Debug.LogError("Nenhum Canvas encontrado na cena atual!");
             return;
         }
 
-        // TelaGameOver
-        Transform tGameOver = EncontrarFilhoInativoPorNome(canvasDaCena.transform, "TelaGameOver");
-        if (tGameOver != null)
-        {
-            telaGameOver = tGameOver.gameObject;
-            ConectarBotoesGameOver(telaGameOver);
-        }
-        else
-        {
-            Debug.LogWarning("Aviso: 'TelaGameOver' não foi encontrado nesta cena.");
-        }
+        // Limpa referências antigas antes de remontar
+        telaGameOverEsquerda = null;
+        telaGameOverDireita = null;
+        caixasCoracaoEsquerdo = null;
+        caixasCoracaoDireito = null;
 
-        // Corações
-        Transform painelCoracoes = EncontrarFilhoInativoPorNome(canvasDaCena.transform, "vampy_hearts");
-        if (painelCoracoes != null)
+        foreach (Canvas canvas in todosOsCanvas)
         {
-            caixasDeCoracao = painelCoracoes.GetComponentsInChildren<Image>(true);
-            Debug.Log("Corações conectados. Total: " + caixasDeCoracao.Length);
-        }
-        else
-        {
-            Debug.LogError("Erro Crítico: 'vampy_hearts' não encontrado no Canvas desta cena!");
-        }
+            // Define o lado verificando se o Canvas ou o pai dele contêm "left" no nome
+            bool ehEsquerdo = canvas.gameObject.name.ToLower().Contains("left") || 
+                              canvas.transform.parent?.name.ToLower().Contains("left") == true;
 
-        // ScoreText — salva estado original para restaurar depois
-        Transform tScore = EncontrarFilhoInativoPorNome(canvasDaCena.transform, "ScoreText");
-        if (tScore != null)
-        {
-            scoreTextRect = tScore.GetComponent<RectTransform>();
-            if (scoreTextRect != null)
+            // 1. Reconectar TelaGameOver
+            Transform tGameOver = EncontrarFilhoInativoPorNome(canvas.transform, "TelaGameOver");
+            if (tGameOver != null)
             {
-                scoreTextPaiOriginal         = scoreTextRect.parent;
-                scoreTextAnchoredPosOriginal = scoreTextRect.anchoredPosition;
-                scoreTextAnchorMinOriginal   = scoreTextRect.anchorMin;
-                scoreTextAnchorMaxOriginal   = scoreTextRect.anchorMax;
-                scoreTextPivotOriginal       = scoreTextRect.pivot;
+                if (ehEsquerdo)
+                {
+                    telaGameOverEsquerda = tGameOver.gameObject;
+                    ConectarBotoesGameOver(telaGameOverEsquerda);
+                }
+                else
+                {
+                    telaGameOverDireita = tGameOver.gameObject;
+                    ConectarBotoesGameOver(telaGameOverDireita);
+                }
+            }
+
+            // 2. Reconectar Corações (vampy_hearts)
+            Transform painelCoracoes = EncontrarFilhoInativoPorNome(canvas.transform, "vampy_hearts");
+            if (painelCoracoes != null)
+            {
+                if (ehEsquerdo)
+                    caixasCoracaoEsquerdo = painelCoracoes.GetComponentsInChildren<Image>(true);
+                else
+                    caixasCoracaoDireito = painelCoracoes.GetComponentsInChildren<Image>(true);
+            }
+
+            // 3. Reconectar ScoreText e salvar dados originais
+            Transform tScore = EncontrarFilhoInativoPorNome(canvas.transform, "ScoreText");
+            if (tScore != null)
+            {
+                RectTransform rText = tScore.GetComponent<RectTransform>();
+                if (rText != null)
+                {
+                    ScoreTextData data = new ScoreTextData
+                    {
+                        rect = rText,
+                        paiOriginal = rText.parent,
+                        anchoredPosOriginal = rText.anchoredPosition,
+                        anchorMinOriginal = rText.anchorMin,
+                        anchorMaxOriginal = rText.anchorMax,
+                        pivotOriginal = rText.pivot
+                    };
+                    listaScoresModificados.Add(data);
+                }
             }
         }
+
+        // Avisos de debug para validação das duas telas
+        if (telaGameOverEsquerda == null || telaGameOverDireita == null)
+            Debug.LogWarning("Aviso: Certifique-se de que os Canvas VR contêm as palavras 'Left' e 'Right' para mapear ambos os GameOvers.");
     }
 
     void ConectarBotoesGameOver(GameObject tela)
     {
         Button[] botoes = tela.GetComponentsInChildren<Button>(true);
-        if (botoes.Length == 0)
-        {
-            Debug.LogWarning("Nenhum botão encontrado dentro da TelaGameOver.");
-            return;
-        }
-
         foreach (Button btn in botoes)
         {
             btn.onClick.RemoveAllListeners();
             string nomeBotao = btn.gameObject.name.ToLower();
 
             if (nomeBotao.Contains("ranking") || nomeBotao.Contains("ver"))
-            {
                 btn.onClick.AddListener(ClicouVerRanking);
-                Debug.Log($"Botão '{btn.gameObject.name}' → Ver Ranking");
-            }
             else
-            {
                 btn.onClick.AddListener(ClicouNoBotaoReiniciar);
-                Debug.Log($"Botão '{btn.gameObject.name}' → Tentar Novamente");
+        }
+    }
+
+    // ── Mover / Restaurar ScoreTexts Simetricamente ────────────────
+    void MoverScoreTextParaGameOver()
+    {
+        foreach (var score in listaScoresModificados)
+        {
+            if (score.rect == null) continue;
+
+            // Identifica se este texto específico era do Canvas Left ou Right
+            bool ehEsquerdo = score.paiOriginal.name.ToLower().Contains("left") || 
+                              score.paiOriginal.root.name.ToLower().Contains("left") ||
+                              score.rect.gameObject.name.ToLower().Contains("left");
+
+            GameObject alvoGameOver = ehEsquerdo ? telaGameOverEsquerda : telaGameOverDireita;
+
+            if (alvoGameOver != null)
+            {
+                score.rect.SetParent(alvoGameOver.transform, false);
+
+                // Configuração simétrica inferior central dentro do respectivo Game Over
+                score.rect.anchorMin = new Vector2(0.5f, 0f);
+                score.rect.anchorMax = new Vector2(0.5f, 0f);
+                score.rect.pivot     = new Vector2(0.5f, 0f);
+                score.rect.anchoredPosition = new Vector2(100f, 450f); 
             }
         }
     }
 
-    // ── Mover / Restaurar ScoreText ───────────────────────────────
-
-    void MoverScoreTextParaGameOver()
-    {
-        if (scoreTextRect == null || telaGameOver == null) return;
-
-        // Move para dentro da TelaGameOver
-        scoreTextRect.SetParent(telaGameOver.transform, false);
-
-        // Inferior central
-        scoreTextRect.anchorMin        = new Vector2(0.5f, 0f);
-        scoreTextRect.anchorMax        = new Vector2(0.5f, 0f);
-        scoreTextRect.pivot            = new Vector2(0.5f, 0f);
-        scoreTextRect.anchoredPosition = new Vector2(100f, 450f);
-    }
-
     void RestaurarScoreText()
     {
-        if (scoreTextRect == null || scoreTextPaiOriginal == null) return;
+        foreach (var score in listaScoresModificados)
+        {
+            if (score.rect == null || score.paiOriginal == null) continue;
 
-        scoreTextRect.SetParent(scoreTextPaiOriginal, false);
-        scoreTextRect.anchorMin        = scoreTextAnchorMinOriginal;
-        scoreTextRect.anchorMax        = scoreTextAnchorMaxOriginal;
-        scoreTextRect.pivot            = scoreTextPivotOriginal;
-        scoreTextRect.anchoredPosition = scoreTextAnchoredPosOriginal;
+            score.rect.SetParent(score.paiOriginal, false);
+            score.rect.anchorMin        = score.anchorMinOriginal;
+            score.rect.anchorMax        = score.anchorMaxOriginal;
+            score.rect.pivot            = score.pivotOriginal;
+            score.rect.anchoredPosition = score.anchoredPosOriginal;
+        }
     }
 
-    // ── Dano e Game Over ──────────────────────────────────────────
+    // ── Dano e Game Over VR ─────────────────────────────────────────
     public void TomarDano()
     {
         if (isGameOver) return;
@@ -181,14 +217,15 @@ public class PlayerHealth : MonoBehaviour
 
         if (vidas <= 0)
         {
-            Debug.Log("GAME OVER!");
+            Debug.Log("GAME OVER VR!");
             isGameOver = true;
 
             if (ScoreManager.Instance != null)
                 ScoreManager.Instance.PausarContagem();
 
-            if (telaGameOver != null)
-                telaGameOver.SetActive(true);
+            // Ativa simultaneamente ambas as telas para visualização em óculos
+            if (telaGameOverEsquerda != null) telaGameOverEsquerda.SetActive(true);
+            if (telaGameOverDireita != null) telaGameOverDireita.SetActive(true);
 
             MoverScoreTextParaGameOver();
 
@@ -197,7 +234,6 @@ public class PlayerHealth : MonoBehaviour
     }
 
     // ── Botões ────────────────────────────────────────────────────
-
     public void ClicouNoBotaoReiniciar()
     {
         SalvarNaRanking();
@@ -215,7 +251,6 @@ public class PlayerHealth : MonoBehaviour
     public void ClicouVerRanking()
     {
         SalvarNaRanking();
-
         Time.timeScale = 1f;
         SceneManager.LoadScene(nomeCenaRanking);
     }
@@ -229,7 +264,6 @@ public class PlayerHealth : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // ── Helpers ───────────────────────────────────────────────────
     public void AtributosReset()
     {
         vidas = 3;
@@ -238,16 +272,24 @@ public class PlayerHealth : MonoBehaviour
 
     public void AtualizarCoracoesNaTela()
     {
-        if (caixasDeCoracao == null || caixasDeCoracao.Length == 0)
+        // Atualiza Olho Esquerdo
+        if (caixasCoracaoEsquerdo != null)
         {
-            Debug.LogWarning("Nenhum coração associado para atualizar na tela!");
-            return;
+            for (int i = 0; i < caixasCoracaoEsquerdo.Length; i++)
+            {
+                if (caixasCoracaoEsquerdo[i] == null) continue;
+                caixasCoracaoEsquerdo[i].sprite = (i < vidas) ? coracaoCheio : coracaoVazio;
+            }
         }
 
-        for (int i = 0; i < caixasDeCoracao.Length; i++)
+        // Atualiza Olho Direito
+        if (caixasCoracaoDireito != null)
         {
-            if (caixasDeCoracao[i] == null) continue;
-            caixasDeCoracao[i].sprite = (i < vidas) ? coracaoCheio : coracaoVazio;
+            for (int i = 0; i < caixasCoracaoDireito.Length; i++)
+            {
+                if (caixasCoracaoDireito[i] == null) continue;
+                caixasCoracaoDireito[i].sprite = (i < vidas) ? coracaoCheio : coracaoVazio;
+            }
         }
     }
 
