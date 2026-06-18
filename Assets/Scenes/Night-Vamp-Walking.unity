@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 67964407}
   - component: {fileID: 67964409}
   - component: {fileID: 67964408}
+  - component: {fileID: 67964410}
   m_Layer: 5
   m_Name: TelaGameOver
   m_TagString: Untagged
@@ -196,6 +197,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67964406}
   m_CullTransparentMesh: 1
+--- !u!114 &67964410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67964406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba1404e77f3bcb4081d73d92e22f069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuInput
+  primeiroBotao: {fileID: 1336755446}
 --- !u!1 &75046220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,7 +1896,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4.889139
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1907,7 +1921,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 960.00275, y: 412.48083, z: -10.976962}
+  m_LocalPosition: {x: 960.2, y: 412.48083, z: -10.976962}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1964,18 +1978,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1336755448}
+    m_SelectOnDown: {fileID: 575350149}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
+    m_HighlightedColor: {r: 0.58431375, g: 0.2901961, b: 0.8196079, a: 1}
+    m_PressedColor: {r: 0.09019608, g: 0.019607844, b: 0.21176472, a: 1}
+    m_SelectedColor: {r: 0.58431375, g: 0.2901961, b: 0.8196079, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2847,8 +2861,8 @@ Transform:
   m_GameObject: {fileID: 1098560635}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.08, y: -6.08, z: 0}
-  m_LocalScale: {x: 3.922652, y: 3.1861885, z: 1}
+  m_LocalPosition: {x: 0.547, y: -6.08, z: 0}
+  m_LocalScale: {x: 4.001462, y: 3.1861885, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1879036690}
@@ -2944,18 +2958,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1336755448}
+    m_SelectOnDown: {fileID: 575350149}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
+    m_HighlightedColor: {r: 0.60784316, g: 0.31764707, b: 0.8078432, a: 1}
+    m_PressedColor: {r: 0.09411766, g: 0.039215688, b: 0.21568629, a: 1}
+    m_SelectedColor: {r: 0.60784316, g: 0.31764707, b: 0.8078432, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3926,8 +3940,8 @@ Transform:
   m_GameObject: {fileID: 2023907362}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.104, y: -4.59, z: 0}
-  m_LocalScale: {x: 3.2485938, y: 3.0929024, z: 1}
+  m_LocalPosition: {x: 0.523, y: -4.59, z: 0}
+  m_LocalScale: {x: 3.3171067, y: 3.0929024, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1879036690}

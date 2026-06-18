@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Second-Floor-Cave.unity
     guid: e39a1802b8a2fca4b8d283ed507bb7db
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game.unity
     guid: 2cf2362d7ad512d419107f9df9125b7a
   - enabled: 1

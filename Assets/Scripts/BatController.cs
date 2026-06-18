@@ -64,6 +64,7 @@ public class BatController : MonoBehaviour
         bool flyInput =
             Input.GetKeyDown(KeyCode.Space) ||
             Input.GetMouseButtonDown(0) ||
+            Input.GetKeyDown(KeyCode.JoystickButton0) ||
             Input.touchCount > 0 &&
             Input.GetTouch(0).phase == TouchPhase.Began;
 
